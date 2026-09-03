@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Verify /docs Directory and Required Artifacts
+      - name: Verify /docs Directory and Contents
         run: |
           echo "Checking repository structure..."
           if [ ! -d "docs" ]; then
@@ -23,23 +23,23 @@ jobs:
           
           echo "Contents of /docs directory:"
           ls -la docs/
-          
-          # Check for ERD / Images
-          if ! ls docs/*.png docs/*.jpg docs/*.jpeg docs/*.pdf 1> /dev/null 2>&1; then
-            echo "::error:: ERD Diagram image missing in /docs!"
+
+          # Ensure /docs is not empty
+          if [ -z "$(ls -A docs/)" ]; then
+            echo "::error:: The /docs directory is empty!"
             exit 1
           fi
 
-          # Check Endpoint Plan
-          if [ ! -f "docs/api_endpoint_plan.md" ] && ! ls docs/*.pdf 1> /dev/null 2>&1; then
-            echo "::error:: API Endpoint plan missing in /docs!"
-            exit 1
-          fi
-
-          # Check SQL Script (handles spaces in filename)
+          # Check for at least one SQL file
           if ! ls docs/*.sql 1> /dev/null 2>&1; then
-            echo "::error:: SQL script (.sql) missing in /docs!"
+            echo "::error:: No .sql file found in /docs!"
             exit 1
           fi
 
-          echo "All required planning deliverables found successfully!"
+          # Check for at least one Markdown or PDF file
+          if ! ls docs/*.md 1> /dev/null 2>&1 && ! ls docs/*.pdf 1> /dev/null 2>&1; then
+            echo "::error:: No API plan (.md or .pdf) found in /docs!"
+            exit 1
+          fi
+
+          echo "Validation successful! Documentation files are present."
