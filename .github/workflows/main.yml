@@ -1,0 +1,45 @@
+name: Validate Repository Docs Structure
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify /docs Directory and Required Artifacts
+        run: |
+          echo "Checking repository structure..."
+          if [ ! -d "docs" ]; then
+            echo "::error:: The /docs directory is missing in the repository root!"
+            exit 1
+          fi
+          
+          echo "Contents of /docs directory:"
+          ls -la docs/
+          
+          # Check for ERD / Images
+          if ! ls docs/*.png docs/*.jpg docs/*.jpeg docs/*.pdf 1> /dev/null 2>&1; then
+            echo "::error:: ERD Diagram image missing in /docs!"
+            exit 1
+          fi
+
+          # Check Endpoint Plan
+          if [ ! -f "docs/api_endpoint_plan.md" ] && ! ls docs/*.pdf 1> /dev/null 2>&1; then
+            echo "::error:: API Endpoint plan missing in /docs!"
+            exit 1
+          fi
+
+          # Check SQL Script (handles spaces in filename)
+          if ! ls docs/*.sql 1> /dev/null 2>&1; then
+            echo "::error:: SQL script (.sql) missing in /docs!"
+            exit 1
+          fi
+
+          echo "All required planning deliverables found successfully!"
