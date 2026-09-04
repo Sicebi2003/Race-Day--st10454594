@@ -13,3 +13,5 @@ RaceDay is a full-stack, web-based event management platform created specificall
 * **Role:** Individual athletes, runners, cyclists, or casual walkers taking part in an event.
 * **Responsibilities:** User-level access to browse upcoming races, enroll in specific distance categories, track personal entry history, and view past race finish times and rankings.
   
+<img width="1624" height="581" alt="Screenshot 2026-09-04 160039" src="https://github.com/user-attachments/assets/d7bd2f84-b205-46dc-85e0-3574e57e24f6" />
+
