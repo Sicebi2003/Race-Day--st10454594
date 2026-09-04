@@ -15,3 +15,6 @@ RaceDay is a full-stack, web-based event management platform created specificall
   
 <img width="1624" height="581" alt="Screenshot 2026-09-04 160039" src="https://github.com/user-attachments/assets/d7bd2f84-b205-46dc-85e0-3574e57e24f6" />
 
+## Video Demonstration
+[Watch Project Walkthrough Video](https://youtu.be/mZcQ12Cl1qg?si=lRezU09scWzJgY6Y)
+
